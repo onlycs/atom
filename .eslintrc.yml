@@ -35,6 +35,8 @@ rules:
   prefer-const: off
   comma-dangle: warn
   comma-spacing: warn
+  import/no-mutable-exports: off
+  import/order: off
   curly: off
   arrow-parens:
     - warn
