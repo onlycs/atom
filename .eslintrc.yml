@@ -1,0 +1,77 @@
+extends:
+  - eslint:recommended
+  - "@nuxtjs/eslint-config-typescript"
+  - "plugin:vue/vue3-essential"
+  - "plugin:vue/vue3-strongly-recommended"
+  - "plugin:vue/vue3-recommended"
+
+env:
+  browser: true
+  node: true
+
+rules:
+  indent:
+    - warn
+    - tab
+    - SwitchCase: 1
+
+  quotes:
+    - warn
+    - single
+
+  semi:
+    - error
+    - always
+
+  no-unused-vars: off
+  no-undef: off
+  no-constant-condition: off
+  no-self-assign: off
+  no-empty: off
+  no-case-declarations: off
+  no-tabs: off
+  no-multiple-empty-lines: off
+  eqeqeq: off
+  prefer-const: off
+  comma-dangle: warn
+  comma-spacing: warn
+  curly: off
+  arrow-parens:
+    - warn
+    - as-needed
+
+  padded-blocks: warn
+  "@typescript-eslint/no-unused-vars": off
+  camelcase: off
+
+  vue/multi-word-component-names: off
+
+  vue/prop-name-casing:
+    - warn
+    - snake_case
+
+  vue/max-attributes-per-line:
+    - warn
+    - singleline:
+        max: 2
+      multiline:
+        max: 1
+
+  vue/html-indent:
+    - warn
+    - tab
+    - ignores: ["SwitchCase"]
+
+  no-trailing-spaces:
+    - warn
+    - skipBlankLines: true
+
+  eol-last:
+    - warn
+    - never
+
+  space-before-function-paren:
+    - warn
+    - anonymous: always
+      asyncArrow: always
+      named: never

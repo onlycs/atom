@@ -1,0 +1,4 @@
+[submodule "ultraviolet"]
+	path = public/ultraviolet
+	url = https://github.com/onlycs/ultraviolet
+	branch = scripts
