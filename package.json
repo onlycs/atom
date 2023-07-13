@@ -10,6 +10,7 @@
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare && prisma generate && prisma db push",
 		"typecheck": "nuxt typecheck",
+		"prod": "pnpm build && pnpm preview",
 		"lint": "eslint --ext .ts,.js,.vue ."
 	},
 	"dependencies": {

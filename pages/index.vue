@@ -81,6 +81,7 @@ export default {
 			<div>
 				<button
 					class="btn btn-ghost btn-square absolute right-6 top-6"
+					aria-label="Go"
 					@click.prevent="(($refs.searchbar as any) as GlobalComponents['Searchbar']).submit_url()"
 				>
 					<Icon

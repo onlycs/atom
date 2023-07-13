@@ -144,6 +144,7 @@ export default {
 		<label
 			ref="dropdown_btn"
 			tabindex="0"
+			aria-label="Settings"
 			:class="`btn btn-${size} btn-ghost btn-square settings-btn`"
 		>
 			<Icon

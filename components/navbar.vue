@@ -15,7 +15,11 @@ const { data: session, error, status: session_status, refresh } = useAsyncData(a
 						type="checkbox"
 					>
 					<div class="drawer-content">
-						<label for="nav-drawer" class="btn btn-ghost btn-square swap swap-rotate">
+						<label
+							for="nav-drawer"
+							class="btn btn-ghost btn-square swap swap-rotate"
+							aria-label="pages"
+						>
 							<Icon
 								class="swap-off"
 								name="solar:list-linear"
@@ -37,12 +41,9 @@ const { data: session, error, status: session_status, refresh } = useAsyncData(a
 							class="menu p-4 w-80 bg-base-200 text-base-content rounded-box mt-4"
 							style="height: calc(100% - 2rem);"
 						>
-							<li class="disabled">
+							<li to="/browser">
 								<NuxtLink>
 									Browser
-									<div class="badge badge-outline">
-										Coming Soon!
-									</div>
 								</NuxtLink>
 							</li>
 							<li>
@@ -57,7 +58,11 @@ const { data: session, error, status: session_status, refresh } = useAsyncData(a
 
 			<div class="navbar-center">
 				<NuxtLink class="btn btn-ghost" to="/">
-					<img src="/atom.svg" class="w-10 h-10">
+					<img
+						src="/atom.svg"
+						class="w-10 h-10"
+						alt="Atom Logo"
+					>
 					<p class="normal-case text-2xl mb-1">
 						Atom
 					</p>

@@ -134,6 +134,7 @@ export default {
 				<label
 					ref="icon_box"
 					tabindex="0"
+					aria-label="Change search engine"
 					:class="`btn btn-ghost btn-outline btn-sm p-2`"
 				>
 					<Icon

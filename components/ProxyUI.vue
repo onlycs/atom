@@ -250,9 +250,6 @@ export default {
 /* Reload button pullback onpress */
 #reload_btn:active:hover > svg {
 	transform: scale(0.95) rotate(-20deg);
-}
-
-#reload_btn > svg {
-	transition: all 0.2s ease-in-out;
+	transition: all 0.1s ease-in-out;
 }
 </style>
