@@ -66,20 +66,18 @@ export function useSettings() {
 
 	function delete_engine(id:string) {
 		let engines = [...settings.value.engines];
-		const index = engines.findIndex(e => e.id == id);
-
-		if (index == -1) return;
-		update_setting('engines', engines.splice(index, 1));
+		engines = engines.filter(e => e.id != id);
+		update_setting('engines', engines);
 		save_cookie();
 	}
 
-        function add_engine() {
-                let engines = [...settings.value.engines];
+	function add_engine() {
+		let engines = [...settings.value.engines];
 		engines.push({
 		    id: randomUUID(),
-		    name: "Custom Engine",
-		    url: "https://example.com/search?q=%q",
-		    logo_name: "ph:globe-light",
+		    name: 'Custom Engine',
+		    url: 'https://example.com/search?q=%q',
+		    logo_name: 'ph:globe-light',
 		    can_delete: true
 		});
 		update_setting('engines', engines);
