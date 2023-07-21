@@ -5,7 +5,7 @@ let config;
 const config_default_options = {
 	devtools: { enabled: true },
 	modules: [
-		'@sidebase/nuxt-auth',
+//		'@sidebase/nuxt-auth',
 		'@nuxtjs/tailwindcss',
 		'nuxt-icon',
 		'@nuxtjs/eslint-module',

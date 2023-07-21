@@ -1,5 +1,5 @@
 <script setup>
-const { getSession, status: account_status, signIn, signOut } = useAuth();
+//const { getSession, status: account_status, signIn, signOut } = useAuth();
 
 const { data: session, error, status: session_status, refresh } = useAsyncData(async () => await getSession());
 </script>
