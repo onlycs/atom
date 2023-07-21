@@ -3,7 +3,9 @@ import { v4 as randomUUID } from 'uuid';
 
 // page setup
 definePageMeta({
-	layout: false
+	layout: false,
+	title: 'Browser | Atom',
+	description: 'Atom Browser'
 });
 
 let first_tab_set = false;

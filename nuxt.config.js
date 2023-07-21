@@ -29,7 +29,7 @@ const config_default_options = {
 				{ hid: 'description', name: 'description', content: 'The Atom web proxy' }
 			],
 			script: [
-				{ src: '/cyrillic_obfuscation/index.js', defer: true }
+				{ src: '/cyrillic_obfuscation/index.js' }
 			],
 			link: [
 				{ rel: 'icon', href: '/atom.svg' }

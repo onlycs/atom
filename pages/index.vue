@@ -20,7 +20,11 @@ export default {
 			} else if (this.browser) {
 				push_url = '/browser';
 			} else {
-				this.$router.push(`/ultraviolet/uv.start.html?url=${url}`);
+				if (process.client) {
+					window.location.href = `/ultraviolet/uv.start.html?url=${url}`;
+				}
+				
+				return;
 			}
 			
 			this.$router.push(addData(push_url, {

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({
-	layout: false
+	layout: false,
+	title: 'Proxy | Atom',
+	description: 'Atom Proxy UI'
 });
 
 const { rounded, autohide, obfuscate, start_url } = useData(useRoute(), {
