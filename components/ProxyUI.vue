@@ -55,7 +55,7 @@ export default {
 			const iframe_window = iframe.contentWindow;
 			const href = iframe.contentWindow?.location.href;
 
-			if (href?.includes('/ultraviolet/') && !href.includes('uv.start.html')) {
+			if (href?.includes('/ultraviolet/service/')) {
 				const real_url = xor.decode(iframe.contentWindow?.location.href.split('/').at(-1) || '');
 				searchbar.set_input_data(real_url);
 				

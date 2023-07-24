@@ -64,6 +64,12 @@ const submit_url = () => {
 const change_engine = (id: string) => {
 	chosen_engine.value = engines.find(e => e.id == id) || engines[0];
 };
+
+defineExpose({
+	set_input_data(v:string) {
+		input_data.value = v;
+	}
+});
 </script>
 
 <template>
