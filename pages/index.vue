@@ -1,39 +1,63 @@
-<script lang="ts">
-import { GlobalComponents } from 'nuxt/dist/app/compat/capi';
-import { xor } from '~/utils/xor';
+<script setup lang="ts">
+import { GlobalComponents } from 'vue';
 
-export default {
-	data() {
-		return {
-			proxyui: false,
-			browser: false,
-			obfuscate: false,
-			settings_menu: this.$refs.settings_menu as GlobalComponents['SettingsMenu']
-		};
-	},
-	methods: {
-		submit_url(url: string) {
-			let push_url = '/proxy';
+const toast = ref(null);
 
-			if (this.proxyui) {
-				push_url = '/proxy';
-			} else if (this.browser) {
-				push_url = '/browser';
-			} else {
-				if (process.client) {
-					window.location.href = `/ultraviolet/uv.start.html?url=${url}`;
-				}
-				
-				return;
-			}
-			
-			this.$router.push(addData(push_url, {
-				url,
-				obfuscate: this.obfuscate
-			}));
+const proxyui = useState('proxyui', () => false);
+const browser = useState('browser', () => false);
+const obfuscate = useState('obfuscate', () => false);
+
+function submit_url(url: string) {
+	let push_url = '/proxy';
+
+	if (proxyui.value) {
+		push_url = '/proxy';
+	} else if (browser.value) {
+		push_url = '/browser';
+	} else {
+		if (process.client) {
+			window.location.href = `/ultraviolet/uv.start.html?url=${url}`;
 		}
+				
+		return;
 	}
-};
+			
+	useRouter().push(addData(push_url, {
+		url,
+		obfuscate: obfuscate.value
+	}));
+}
+
+onMounted(() => {
+	const toast_elem = (toast.value as any) as GlobalComponents['Toast'];
+	const { startSW, load_bundle, is_registered } = useUltraviolet();
+
+	toast_elem.hide();
+
+	is_registered().then(is => {
+		if (is)
+			return;
+
+		toast_elem.show();
+		toast_elem.stop(20);
+
+		if (process.client) {
+			load_bundle(window, () => {
+				toast_elem.stop(50);
+
+				startSW().then(() => {
+					toast_elem.resume();
+			
+					setTimeout(() => {
+						toast_elem.set_message('Ultraviolet Ready!');
+						toast_elem.set_icon('solar:check-circle-linear');
+						toast_elem.show();
+					}, 1000);
+				});
+			});
+		}
+	});
+});
 </script>
 
 <template>
@@ -41,7 +65,6 @@ export default {
 		<div class="flex flex-row items-center card bg-base-200 h-24 p-2" style="width: 40rem;">
 			<div class="absolute top-6 left-6">
 				<SettingsMenu
-					ref="settings_menu"
 					size="md"
 					:settings="[
 						{
@@ -95,6 +118,13 @@ export default {
 					/>
 				</button>
 			</div>
+
+			<Toast
+				ref="toast"
+				icon="solar:info-circle-linear"
+				:timeout_ms="1000"
+				message="Registering Service Workers..."
+			/>
 		</div>
 	</div>
 </template>

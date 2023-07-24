@@ -1,5 +1,6 @@
 import { SearchEngine } from 'components/Searchbar.vue';
 import { v4 as randomUUID } from 'uuid';
+import { xor } from '~/utils/xor';
 
 export interface Settings {
 	engines: SearchEngine[],
