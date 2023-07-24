@@ -37,6 +37,7 @@ rules:
   comma-spacing: warn
   import/no-mutable-exports: off
   import/order: off
+  spaced-comment: warn
   import/first: warn
   curly: off
   arrow-parens:

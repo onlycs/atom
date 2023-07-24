@@ -74,11 +74,11 @@ export function useSettings() {
 	function add_engine() {
 		let engines = [...settings.value.engines];
 		engines.push({
-		    id: randomUUID(),
-		    name: 'Custom Engine',
-		    url: 'https://example.com/search?q=%q',
-		    logo_name: 'ph:globe-light',
-		    can_delete: true
+			id: randomUUID(),
+			name: 'Custom Engine',
+			url: 'https://example.com/search?q=%q',
+			logo_name: 'ph:globe-light',
+			can_delete: true
 		});
 		update_setting('engines', engines);
 		save_cookie();
