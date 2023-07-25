@@ -13,25 +13,21 @@ const props = defineProps({
 		type: String,
 		required: true
 	},
-	hidden_by_default: {
+	hidden: {
 		type: Boolean,
 		required: false,
 		default: false
 	}
 });
 
-const message_state = useState('message_state', () => props.message);
-const icon = useState('icon', () => props.icon);
-
 let tick = props.timeout_ms / 100;
-const percent = useState('percent', () => 0);
-const stopped = useState('stopped', () => false);
-const hidden = useState('hidden', () => props.hidden_by_default);
-const toast = ref(null);
+const percent = ref(0);
+const stopped = ref(false);
+const currently_hidden = ref(props.hidden);
 
 function recursiveIncrement(on_finish?: () => void, until?: number, force?: boolean) {
 	if (percent.value < (until || 100)) {
-		if ((!stopped) || force) {
+		if ((!stopped.value && !currently_hidden.value) || force) {
 			setTimeout(() => recursiveIncrement(on_finish, until, force), tick);
 		}
 	} else {
@@ -42,42 +38,41 @@ function recursiveIncrement(on_finish?: () => void, until?: number, force?: bool
 }
 
 function stop(at?: number) {
-	stopped.value = true;
+	if (!stopped.value) {
+		stopped.value = true;
 	
-	if (at) {
-		recursiveIncrement(() => {}, at, true);
+		if (at) {
+			recursiveIncrement(() => {}, at, true);
+		}
 	}
 }
 
 function resume() {
-	stopped.value = false;
-	recursiveIncrement(hide, 100, true);
+	if (stopped.value) {
+		stopped.value = false;
+		recursiveIncrement(hide, 100);
+	}
 }
 
 function hide() {
-	hidden.value = true;
-	
-	setTimeout(() => { percent.value = 0; }, 200);
+	if (!currently_hidden.value) {
+		currently_hidden.value = true;
+		setTimeout(() => { percent.value = 0; }, 200);
+	}
 }
 
 function show() {
-	hidden.value = false;
-	stopped.value = false;
-	percent.value = 0;
+	if (currently_hidden.value) {
+		currently_hidden.value = false;
+		stopped.value = false;
+		percent.value = 0;
 
-	recursiveIncrement(hide, 100, true);
-}
-
-function set_message(msg: string) {
-	message_state.value = msg;
-}
-
-function set_icon(icn: string) {
-	icon.value = icn;
+		recursiveIncrement(hide, 100);
+	}
 }
 
 onMounted(() => {
-	if (!hidden.value) {
+	if (!props.hidden) {
 		recursiveIncrement(hide);
 	}
 });
@@ -86,16 +81,13 @@ defineExpose({
 	show,
 	hide,
 	stop,
-	resume,
-	set_message,
-	set_icon
+	resume
 });
 </script>
 
 <template>
 	<div
-		ref="toast"
-		:class="`toast ${hidden ? 'toast-hidden' : ''}`"
+		:class="`toast ${currently_hidden ? 'toast-hidden' : ''}`"
 	>
 		<div class="alert shadow-lg bg-base-300">
 			<div class="flex flex-col w-full">
@@ -108,7 +100,7 @@ defineExpose({
 
 					<div class="ml-4">
 						<p class="break-words text-sm w-48 whitespace-normal">
-							{{ message_state }}
+							{{ message }}
 						</p>
 					</div>
 				</div>

@@ -3,7 +3,8 @@ import { GlobalComponents } from 'vue';
 
 useHead(useSetHead('Home', 'The Atom web proxy'));
 
-const toast = ref(null);
+const sw_toast: any = ref(null);
+const ready_toast: any = ref(null);
 
 const proxyui = useState('proxyui', () => false);
 const browser = useState('browser', () => false);
@@ -31,30 +32,27 @@ function submit_url(url: string) {
 }
 
 onMounted(() => {
-	const toast_elem = (toast.value as any) as GlobalComponents['Toast'];
-	const { startSW, load_bundle, is_registered } = useUltraviolet();
+	const toast_sw = sw_toast.value;
+	const toast_ready = ready_toast.value;
 
-	toast_elem.hide();
-	toast_elem.set_message('Registering Service Workers...');
+	const { startSW, load_bundle, is_registered } = useUltraviolet();
 
 	is_registered().then(is => {
 		if (is)
 			return;
 
-		toast_elem.show();
-		toast_elem.stop(20);
+		toast_sw.show();
+		toast_sw.stop(20);
 
 		if (process.client) {
 			load_bundle(window, () => {
-				toast_elem.stop(50);
+				toast_sw.stop(50);
 
 				startSW().then(() => {
-					toast_elem.resume();
+					toast_sw.resume();
 			
 					setTimeout(() => {
-						toast_elem.set_message('Ultraviolet Ready!');
-						toast_elem.set_icon('solar:check-circle-linear');
-						toast_elem.show();
+						toast_ready.show();
 					}, 1000);
 				});
 			});
@@ -123,10 +121,21 @@ onMounted(() => {
 			</div>
 
 			<Toast
-				ref="toast"
+				id="sw_toast"
+				ref="sw_toast"
 				icon="solar:info-circle-linear"
 				:timeout_ms="1000"
 				message="Registering Service Workers..."
+				hidden
+			/>
+
+			<Toast
+				id="ready_toast"
+				ref="ready_toast"
+				icon="solar:check-circle-linear"
+				:timeout_ms="1000"
+				message="Ultraviolet Ready!"
+				hidden
 			/>
 		</div>
 	</div>

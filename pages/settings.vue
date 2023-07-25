@@ -8,7 +8,9 @@ useHead(useSetHead('Settings', 'Settings for the Atom web proxy'));
 
 const delete_modal: any = ref(null);
 const reset_modal: any = ref(null);
-const toast: any = ref(null);
+
+const kill_toast: any = ref(null);
+const done_toast: any = ref(null);
 
 let current_callback = () => {};
 
@@ -33,15 +35,21 @@ function confirm_reset() {
 
 function resetSW() {
 	const { killSW } = useUltraviolet();
-	const toast_elem = toast.value as GlobalComponents['Toast'];
+	const kill_toast_elem = kill_toast.value;
+	const done_toast_elem = done_toast.value;
 
-	toast_elem.set_message('Killing Service Worker...');
-
-	toast_elem.show();
-	toast_elem.stop(20);
+	kill_toast_elem.show();
+	kill_toast_elem.stop(20);
 
 	if (process.client) {
-		killSW(window.navigator).then(toast_elem.resume);
+		killSW(window.navigator).then(() => {
+			kill_toast_elem.resume();
+		}).then(() => {
+			setTimeout(() => {
+				kill_toast_elem.hide();
+				done_toast_elem.show();
+			}, 1000);
+		});
 	}
 }
 </script>
@@ -260,11 +268,19 @@ function resetSW() {
 		</dialog>
 
 		<Toast
-			ref="toast"
+			ref="kill_toast"
 			icon="solar:info-circle-linear"
 			:timeout_ms="1000"
 			message="Killing Service Worker..."
-			hidden_by_default
+			hidden
+		/>
+
+		<Toast
+			ref="done_toast"
+			icon="solar:check-circle-linear"
+			:timeout_ms="1000"
+			message="Service Worker Killed"
+			hidden
 		/>
 
 		<div class="w-full flex flex-col items-center mb-4">
