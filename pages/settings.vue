@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { GlobalComponents } from 'vue';
+import { themeChange } from 'theme-change';
+import themes from '~/utils/themes';
 
 const { settings, delete_engine, update_engine, save_cookie, add_engine, update_setting, set_default } = useSettings();
 
@@ -52,6 +53,10 @@ function resetSW() {
 		});
 	}
 }
+
+onMounted(() => {
+	themeChange(false);
+});
 </script>
 
 <template>
@@ -219,6 +224,34 @@ function resetSW() {
 					<button class="btn btn-md btn-outline btn-error w-full" @click="resetSW">
 						Reset
 					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="card bg-base-200 shadow-xl" style="max-width: 74rem;">
+			<div class="card-body">
+				<h2 class="card-title w-full text-center flex-col">
+					Theme
+				</h2>
+
+				<p class="text-sm w-full text-center">
+					Change the theme
+				</p>
+
+				<div class="card-actions justify-end mt-6">
+					<select class="select select-bordered w-full" data-choose-theme>
+						<option selected value="">
+							Default
+						</option>
+						<option
+							v-for="theme in themes"
+							:key="theme"
+							:value="theme"
+							class="capitalize"
+						>
+							{{ theme }}
+						</option>
+					</select>
 				</div>
 			</div>
 		</div>
