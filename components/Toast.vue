@@ -12,17 +12,21 @@ const props = defineProps({
 	message: {
 		type: String,
 		required: true
+	},
+	hidden_by_default: {
+		type: Boolean,
+		required: false,
+		default: false
 	}
 });
 
-
-const message = useState('message', () => props.message);
+const message_state = useState('message_state', () => props.message);
 const icon = useState('icon', () => props.icon);
 
 let tick = props.timeout_ms / 100;
 const percent = useState('percent', () => 0);
 const stopped = useState('stopped', () => false);
-const hidden = useState('hidden', () => false);
+const hidden = useState('hidden', () => props.hidden_by_default);
 const toast = ref(null);
 
 function recursiveIncrement(on_finish?: () => void, until?: number, force?: boolean) {
@@ -65,7 +69,7 @@ function show() {
 }
 
 function set_message(msg: string) {
-	message.value = msg;
+	message_state.value = msg;
 }
 
 function set_icon(icn: string) {
@@ -73,7 +77,9 @@ function set_icon(icn: string) {
 }
 
 onMounted(() => {
-	recursiveIncrement(hide);
+	if (!hidden.value) {
+		recursiveIncrement(hide);
+	}
 });
 
 defineExpose({
@@ -102,7 +108,7 @@ defineExpose({
 
 					<div class="ml-4">
 						<p class="break-words text-sm w-48 whitespace-normal">
-							{{ message }}
+							{{ message_state }}
 						</p>
 					</div>
 				</div>

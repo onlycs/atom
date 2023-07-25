@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { GlobalComponents } from 'vue';
+
 const { settings, delete_engine, update_engine, save_cookie, add_engine, update_setting, set_default } = useSettings();
+
 
 useHead(useSetHead('Settings', 'Settings for the Atom web proxy'));
 
 const delete_modal: any = ref(null);
 const reset_modal: any = ref(null);
+const toast: any = ref(null);
 
 let current_callback = () => {};
 
@@ -25,6 +29,20 @@ function exit_current_callback() {
 function confirm_reset() {
 	current_callback = () => set_default();
 	reset_modal.value.showModal();
+}
+
+function resetSW() {
+	const { killSW } = useUltraviolet();
+	const toast_elem = toast.value as GlobalComponents['Toast'];
+
+	toast_elem.set_message('Killing Service Worker...');
+
+	toast_elem.show();
+	toast_elem.stop(20);
+
+	if (process.client) {
+		killSW(window.navigator).then(toast_elem.resume);
+	}
 }
 </script>
 
@@ -177,6 +195,26 @@ function confirm_reset() {
 			</div>
 		</div>
 
+		<div class="card bg-base-200 shadow-xl" style="max-width: 74rem;">
+			<div class="card-body">
+				<h2 class="card-title w-full text-center flex-col">
+					Kill Service Worker
+				</h2>
+
+				<p class="text-sm w-full text-center">
+					If you are having problems with Ultraviolet, do this. <br>
+					This may remove all Ultraviolet site data. <br>
+					To restart the service worker, go to the homepage
+				</p>
+
+				<div class="card-actions justify-end mt-6">
+					<button class="btn btn-md btn-outline btn-error w-full" @click="resetSW">
+						Reset
+					</button>
+				</div>
+			</div>
+		</div>
+
 		<dialog
 			ref="delete_modal"
 			class="modal"
@@ -220,6 +258,14 @@ function confirm_reset() {
 				</div>
 			</form>
 		</dialog>
+
+		<Toast
+			ref="toast"
+			icon="solar:info-circle-linear"
+			:timeout_ms="1000"
+			message="Killing Service Worker..."
+			hidden_by_default
+		/>
 
 		<div class="w-full flex flex-col items-center mb-4">
 			<div class="text-sm rounded-box bg-base-200 w-fit">

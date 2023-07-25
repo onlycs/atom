@@ -35,6 +35,7 @@ onMounted(() => {
 	const { startSW, load_bundle, is_registered } = useUltraviolet();
 
 	toast_elem.hide();
+	toast_elem.set_message('Registering Service Workers...');
 
 	is_registered().then(is => {
 		if (is)

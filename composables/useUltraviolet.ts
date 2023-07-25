@@ -1,10 +1,12 @@
 export function useUltraviolet() {
 	return {
-		killSW(navigator: Navigator) {
-			navigator.serviceWorker.getRegistrations().then(registrations => {
-				for (let registration of registrations) {
-					registration.unregister();
-				}
+		killSW(navigator: Navigator): Promise<void> {
+			return new Promise((resolve, reject) => {
+				navigator.serviceWorker.getRegistrations().then(registrations => {
+					for (let registration of registrations) {
+						registration.unregister();
+					}
+				}).then(resolve).catch(reject);
 			});
 		},
 		load_bundle(window: Window, callback: (ev: Event) => void) {
