@@ -25,6 +25,7 @@ rules:
 
   no-unused-vars: off
   no-undef: off
+  object-curly-spacing: warn
   no-constant-condition: off
   no-self-assign: off
   no-empty: off
@@ -47,12 +48,17 @@ rules:
   padded-blocks: warn
   "@typescript-eslint/no-unused-vars": off
   camelcase: off
+  "@typescript-eslint/type-annotation-spacing": warn
 
   vue/multi-word-component-names: off
 
   vue/prop-name-casing:
     - warn
     - snake_case
+
+  vue/html-quotes:
+    - warn
+    - double
 
   vue/max-attributes-per-line:
     - warn

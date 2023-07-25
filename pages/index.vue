@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { GlobalComponents } from 'vue';
 
+useHead(useSetHead('Home', 'The Atom web proxy'));
+
 const toast = ref(null);
 
 const proxyui = useState('proxyui', () => false);

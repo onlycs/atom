@@ -1,8 +1,5 @@
 <script setup>
-definePageMeta({
-	title: 'About | Atom',
-	description: 'About Atom'
-});
+useHead(useSetHead('About', 'About the Atom web proxy'));
 </script>
 
 <template>

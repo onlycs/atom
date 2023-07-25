@@ -14,7 +14,7 @@ export class History {
 		this.index = -1;
 	}
 
-	set_next(url:string) {
+	set_next(url: string) {
 		if ((this.current_url() ?? '') !== url) {
 			const node: HistoryNode = {
 				id: randomUUID(),

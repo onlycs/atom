@@ -46,7 +46,7 @@ export default {
 		};
 	},
 	methods: {
-		set_url(url:string) {
+		set_url(url: string) {
 			((this.$refs.iframe as HTMLIFrameElement).contentWindow as Window).location.href = `/ultraviolet/uv.start.html?url=${url}`;
 		},
 		iframe_load() {

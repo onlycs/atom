@@ -14,6 +14,9 @@ dependencies:
   theme-change:
     specifier: ^2.5.0
     version: 2.5.0
+  ts-interface-checker:
+    specifier: ^1.0.2
+    version: 1.0.2
   uuid:
     specifier: ^9.0.0
     version: 9.0.0
@@ -9639,6 +9642,10 @@ packages:
 
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
+
+  /ts-interface-checker@1.0.2:
+    resolution: {integrity: sha512-4IKKvhZRXhvtYF/mtu+OCfBqJKV6LczUq4kQYcpT+iSB7++R9+giWnp2ecwWMIcnG16btVOkXFnoxLSYMN1Q1g==}
+    dev: false
 
   /tsconfig-paths@3.14.2:
     resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}

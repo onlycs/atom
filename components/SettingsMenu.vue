@@ -111,7 +111,7 @@ export default {
 		}
 	},
 	methods: {
-		get_value<T>(id:string): AnySettingValueT<T> | undefined {
+		get_value<T>(id: string): AnySettingValueT<T> | undefined {
 			const option = (this.settings as AnySetting[]).find(option => option.id === id);
 			return option?.value;
 		},

@@ -2,25 +2,11 @@
 import { PropType } from 'vue';
 import validator from 'validator';
 
-export interface SearchEngine {
-	id: string;
-	name: string;
-	url: string;
-	logo_name: string;
-	default?: boolean;
-	can_delete: boolean;
-}
 
 const props = defineProps({
 	submit: {
-		type: Function as PropType<(url:string) => void>,
-		default: (url:string) => {
-		// @ts-ignore
-			register_uv();
-
-			// @ts-ignore
-			start_uv(url);
-		}
+		type: Function as PropType<(url: string) => void>,
+		required: true
 	},
 	small: {
 		type: Boolean,
@@ -66,7 +52,7 @@ const change_engine = (id: string) => {
 };
 
 defineExpose({
-	set_input_data(v:string) {
+	set_input_data(v: string) {
 		input_data.value = v;
 	}
 });

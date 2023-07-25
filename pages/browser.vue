@@ -3,10 +3,10 @@ import { v4 as randomUUID } from 'uuid';
 
 // page setup
 definePageMeta({
-	layout: false,
-	title: 'Browser | Atom',
-	description: 'Atom Browser'
+	layout: false
 });
+
+useHead(useSetHead('Browser', 'A browser for the Atom web proxy'));
 
 let first_tab_set = false;
 
@@ -71,7 +71,7 @@ const add_tab = (): string => {
 	return id;
 };
 
-const remove_tab = (id:string) => {
+const remove_tab = (id: string) => {
 	const index = tabs.value.findIndex(tab => tab.id === id);
 	if (index !== -1) {
 		tabs.value.splice(index, 1);

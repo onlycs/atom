@@ -22,18 +22,13 @@ const config_default_options = {
 	},
 	app: {
 		head: {
-			title: 'Atom',
 			meta: [
 				{ charset: 'utf-8' },
-				{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
-				{ hid: 'description', name: 'description', content: 'The Atom web proxy' }
+				{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
 			],
 			script: [
 				{ src: '/cyrillic_obfuscation/index.js' },
 				{ src: '/ultraviolet/uv.helpers.js' }
-			],
-			link: [
-				{ rel: 'icon', href: '/atom.svg' }
 			],
 			htmlAttrs: {
 				lang: 'en'
