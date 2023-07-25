@@ -133,5 +133,10 @@ export function useSettings() {
 		settings.value = { ...cookie.value };
 	}
 
-	return { settings, update_setting, update_engine, save_cookie, delete_engine, add_engine, default_settings };
+	function set_default() {
+		settings.value = { ...default_settings };
+		save_cookie();
+	}
+
+	return { settings, update_setting, update_engine, save_cookie, delete_engine, add_engine, default_settings, set_default };
 }

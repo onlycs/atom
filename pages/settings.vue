@@ -1,9 +1,11 @@
 <script setup lang="ts">
-const { settings, delete_engine, update_engine, save_cookie, add_engine, update_setting } = useSettings();
+const { settings, delete_engine, update_engine, save_cookie, add_engine, update_setting, set_default } = useSettings();
 
 useHead(useSetHead('Settings', 'Settings for the Atom web proxy'));
 
 const delete_modal: any = ref(null);
+const reset_modal: any = ref(null);
+
 let current_callback = () => {};
 
 function confirm_delete(callback: () => void) {
@@ -18,6 +20,11 @@ function run_current_callback() {
 
 function exit_current_callback() {
 	current_callback = () => {};
+}
+
+function confirm_reset() {
+	current_callback = () => set_default();
+	reset_modal.value.showModal();
 }
 </script>
 
@@ -191,6 +198,36 @@ function exit_current_callback() {
 				</div>
 			</form>
 		</dialog>
+
+		<dialog
+			ref="reset_modal"
+			class="modal"
+		>
+			<form method="dialog" class="modal-box">
+				<h3 class="text-lg">
+					Confirm Reset
+				</h3>
+				<p>Are you sure you want to reset to default? Changes are irreversible!</p>
+
+				<div class="modal-action">
+					<button class="btn h-6 btn-error btn-outline" @click="run_current_callback">
+						Yes, please reset!
+					</button>
+
+					<button class="btn w-24" @click="exit_current_callback">
+						Cancel
+					</button>
+				</div>
+			</form>
+		</dialog>
+
+		<div class="w-full flex flex-col items-center mb-4">
+			<div class="text-sm rounded-box bg-base-200 w-fit">
+				<div class="btn btn-xs btn-rounded btn-error normal-case" @click="confirm_reset">
+					Reset Settings to Default
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
